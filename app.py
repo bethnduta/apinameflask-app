@@ -1,14 +1,19 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask,render_template
 from newsapi import NewsApiClient
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def home():
-    newsapi = NewsApiClient(api_key="df87776a71c749458045ed641e8687cb")
-    top_headlines = newsapi.get_top_headlines(sources = 'bbc-news')
-    t_articles = top_headlines('articles')
+    api_key = 'df87776a71c749458045ed641e8687cb'
+    
+    newsapi = NewsApiClient(api_key=api_key)
+
+    top_headlines = newsapi.get_top_headlines(sources = "abc-news")
+    all_articles = newsapi.get_everything(sources = "abc-news")
+
+    t_articles = top_headlines['articles']
+    a_articles = all_articles['articles']
 
     news = []
     desc = []
@@ -16,7 +21,7 @@ def home():
     p_date = []
     url = []
 
-    for i in range(len(t_articles)):
+    for i in range (len(t_articles)):
         main_article = t_articles[i]
 
         news.append(main_article['title'])
@@ -25,10 +30,27 @@ def home():
         p_date.append(main_article['publishedAt'])
         url.append(main_article['url'])
 
-        contents = zip(news,desc,img,p_date,url)
+        contents = zip( news,desc,img,p_date,url)
 
+    news_all = []
+    desc_all = []
+    img_all = []
+    p_date_all = []   
+    url_all = []
 
-    return render_template('index.html', contents=contents)
+    for j in range(len(a_articles)): 
+        main_all_articles = a_articles[j]   
+
+        news_all.append(main_all_articles['title'])
+        desc_all.append(main_all_articles['description'])
+        img_all.append(main_all_articles['urlToImage'])
+        p_date_all.append(main_all_articles['publishedAt'])
+        url_all.append(main_article['url'])
+        
+        all = zip( news_all,desc_all,img_all,p_date_all,url_all)
+
+    return render_template('index.html',contents=contents,all = all)
+
 
 if __name__ == '__main__':
-    app.run(debug=True)    
+    app.run(debug=True)
