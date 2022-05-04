@@ -22,7 +22,28 @@
     <section id="main">
         <div class="banner"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI1PVLYNp5uWJ-tUnlDtuxnW0FCTmBbGDFjA&usqp=CAU"></div>
         <div class="head">LATTEST UPTODATE NEWS</div>
+        {%for title,desc,img,p_date,url in contents %}
+        <div class="wrapper">
+            <div class="item"><a href="{{url}}"><img src="{{img}}"></a></div>
+            <div class="c-box">
+                <div class="content"><a href="{{url}}"><h2>{{title}}</h2></a></div>
+                <div class="content"><a href="{{url}}"><h2>{{desc}}</h2></a></div>
+                <div class="content"><p style="color:rgb(22,255,0)">publish date:</p><p>{{p_date}}</p></div>
+
+            </div>
+        </div>
+        {% endfor %}
         <div class="head">TODAYS NEWS</div>
+        {% for title,desc,img,p_date,url in all %}
+        <div class="wrapper">
+            <div class="item"><a href="{{url}}"><img src="{{img}}"></a></div>
+            <div class = "c-box">
+            <div class="content"><a href="{{url}}"><h2>{{title}}</h2></a></div>
+            <div class="content"><p>{{desc}}</p></div>
+            <div class="content"><p style="color:rgb(77, 255, 0);">Publish Date:- </p><p> {{p_date}} </p></div>
+            </div>
+            </div> 
+        {% endfor %}
     </section>
     <footer>
         <div class="head-git"><h2>You can get the source code f this project by visiting my GITHUB pagea <a href=""></a></h2></div>
